@@ -16,34 +16,37 @@ module next_state_generator(
     always_comb begin
         case (cur_st)
             ST_INITIAL: begin
-                if(flk == 1) nxt_st <= ST_0_TO_15;
-                else nxt_st <= cur_st;
+                if(flk == 1) nxt_st = ST_0_TO_15;
+                else nxt_st = cur_st;
             end
             ST_0_TO_15: begin
-                if(count == 5'd16) nxt_st <= ST_15_TO_5;
-                else nxt_st <= cur_st;
+                if(count == 5'd15) nxt_st = ST_15_TO_5;
+                else nxt_st = cur_st;
             end
             ST_15_TO_5: begin
-                if(flk == 1 && count == 5'd5) nxt_st <= ST_0_TO_15;
-                else if(count == 5'd5) nxt_st <= ST_5_TO_10;
-                else nxt_st <= cur_st;
+                if(flk == 1 && count == 5'd6) nxt_st = ST_0_TO_15;
+                else if(count == 5'd6) nxt_st = ST_5_TO_10;
+                else nxt_st = cur_st;
             end
             ST_5_TO_10: begin
-                if(count == 5'd11) nxt_st <= ST_10_TO_0;
-                else nxt_st <= cur_st;
+                if(count == 5'd10) nxt_st = ST_10_TO_0;
+                else nxt_st = cur_st;
             end
             ST_10_TO_0: begin
-                if(((count == 5'd5)||(count == 5'd0))&&(flk == 1)) nxt_st <= ST_5_TO_10;
-                else if ((count == 5'd0)&&(flk == 0)) nxt_st <= ST_0_TO_5;
-                else nxt_st <= cur_st;
+                if(((count == 5'd6)||(count == 5'd1))&&(flk == 1)) nxt_st = ST_5_TO_10;
+                else if ((count == 5'd1)&&(flk == 0)) nxt_st = ST_0_TO_5;
+                else nxt_st = cur_st;
             end
             ST_0_TO_5: begin
-                if(count == 5'd6) nxt_st <= ST_5_TO_0;
-                else nxt_st <= cur_st;
+                if(count == 5'd5) nxt_st = ST_5_TO_0;
+                else nxt_st = cur_st;
             end
             ST_5_TO_0: begin
-                if(count == 5'd0) nxt_st <= ST_INITIAL;
-                else nxt_st <= cur_st;
+                if(count == 5'd1) nxt_st = ST_INITIAL;
+                else nxt_st = cur_st;
+            end
+            default: begin
+                nxt_st = ST_INITIAL;
             end
         endcase
     end
